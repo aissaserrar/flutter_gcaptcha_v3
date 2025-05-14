@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:example/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gcaptcha_v3/recaptca_config.dart';
 import 'package:flutter_gcaptcha_v3/web_view.dart';
@@ -11,7 +10,7 @@ void main() {
   // Should be called at main to setup the site key
   //
   //TO VERY TOKEN: USE THE SECRETE: 6LcXCvspAAAAAP-an5GPf2pLueo34ajUTS4r5zej
-  RecaptchaHandler.instance.setupSiteKey(dataSiteKey: AppConstants.dataSiteKey);
+  RecaptchaHandler.instance.setupSiteKey(dataSiteKey: '');
   runApp(const MyApp());
 }
 

@@ -12,11 +12,12 @@ class RecaptchaHandler {
   static RecaptchaHandler? _instance;
   late WebViewController controller;
   late String _siteKey;
-
+  bool _isReady = false;
 
   String? _captchaToken;
 
   String get siteKey => _siteKey;
+  bool get isReady => _isReady;
 
   String? get captchaToken => _captchaToken;
 
@@ -33,6 +34,11 @@ class RecaptchaHandler {
 
   void updateToken({required String generatedToken}){
     _captchaToken=generatedToken;
+  }
+  
+  /// Set the ready state of the reCAPTCHA
+  void setReady(bool ready) {
+    _isReady = ready;
   }
 
   /// setups the data site key

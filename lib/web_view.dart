@@ -10,11 +10,13 @@ class ReCaptchaWebView extends StatefulWidget {
       required this.width,
       required this.height,
       required this.onTokenReceived,
+    this.onCaptchaReady,
       this.webViewColor = Colors.transparent})
       : super(key: key);
 
   final double width, height;
   final Function(String token) onTokenReceived;
+  final Function()? onCaptchaReady;
   final Color? webViewColor;
   final String url;
 
@@ -37,7 +39,15 @@ class _ReCaptchaWebViewState extends State<ReCaptchaWebView> {
       ..setBackgroundColor(widget.webViewColor ?? Colors.transparent)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..addJavaScriptChannel(AppConstants.readyJsName,
-          onMessageReceived: (JavaScriptMessage message) {})
+        onMessageReceived: (JavaScriptMessage message) {
+          if (message.message == "ready") {
+            RecaptchaHandler.instance.setReady(true);
+            if (widget.onCaptchaReady != null) {
+              widget.onCaptchaReady!();
+            }
+          }
+        },
+      )
       ..addJavaScriptChannel(AppConstants.captchaJsName,
           onMessageReceived: (JavaScriptMessage message) {
         widget.onTokenReceived(message.message);
